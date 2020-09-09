@@ -45,7 +45,10 @@ const displayController = (() => {
     }
   })()
 
-  
+  const renderBoard = (() => {
+    for(let i = 0; i < 9; i ++) {
+    }
+  })
 
   // GET PLAYERS INFO
 
