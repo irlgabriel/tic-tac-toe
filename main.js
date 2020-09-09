@@ -23,10 +23,43 @@ const gameBoard = (() => {
     gameArray[pos[0]][pos[1]] = player.sign
   }
 
+  const win = () => {
+    // Check rows
+    const board = gameBoard.gameArray
+    for(let i = 0; i < 3; i ++) {
+      if(board[i][0] != "" && (board[i][0] == board[i][1] == board[i][2])) {
+        return board[i][0]
+      }
+    }
+
+    // Check columns
+
+    for(let j = 0; j < 3; j ++) {
+      if(board[0][j] != "" && (board[0][j] == board[1][j] == board[2][j])) {
+        return board[0][j]
+      }
+    }
+
+    // Check diagonals
+
+    // Primary diagonal
+    if(board[0][0] != "" && (board[0][0] == board[1][1] == board[2][2])) {
+      return board[0][0]
+    }
+
+    // Secondary diagonal
+    if(board[0][2] != "" && (board[0][2] == board[1][1] == board[2][0])) {
+      return board[0][2]
+    }
+
+    return false;
+  }
+  
   return {gameArray,
           player,
           players,
-          move}
+          move,
+          win}
 
 })()
 
@@ -36,7 +69,7 @@ const displayController = (() => {
 
   // RENDERING DOM (based on gameBoard)
 
-  const buildBoard = ((gameArray) => {
+  const buildBoard = (() => {
     for(let i = 0; i < 9; i ++) {
       const block = document.createElement("div")
       block.classList.add("boardBlock")
@@ -45,26 +78,28 @@ const displayController = (() => {
     }
   })()
 
-  const placeSign = (sign) => {
-    const para = document.createElement("p")
-    console.log(para)
-    para.classList.add("sign", sign)
-
-    return para;
-  }
+  // RENDERS DOM Elements based on gameBoard's information
 
   const renderBoard = (() => {
-    const blocks = document.querySelectorAll("data-id")
+    const blocks = document.querySelectorAll("[data-id]")
+    console.log(blocks)
     for(let i = 0; i < 9; i ++) {
       const block = blocks[i]
       const boardSign = gameBoard.gameArray[Math.floor(i / 3)][i % 3]
       console.log(boardSign)
       if(boardSign !== "") {
-        let para = placeSign(boardSign[1])
+        let para = placeSign(boardSign)
         block.appendChild(para)
       }
     }
   })
+
+  const placeSign = (sign) => {
+    const para = document.createElement("p")
+    para.classList.add("sign", sign)
+
+    return para;
+  }
 
   // GET PLAYERS INFO
 
@@ -79,6 +114,9 @@ const displayController = (() => {
 
     e.target.style.display = "none"
 
+    // We start the game once the users have been selected!
+    ticTacToe()
+
     return false;
 
   })
@@ -86,24 +124,29 @@ const displayController = (() => {
   return {
     renderBoard,
     placeSign,
-    renderBoard
   }
 
 })()
 
+// GAME LOGIC MODULE
 
+const ticTacToe = () => {
 
-/*
-block.addEventListener("click", () => {
-        const id = block.getAttribute("data-id")
-        const row = Math.floor(id / 3)
-        const col = id % 3
-        gameBoard.gameArray[row][col] = sign;
+  // toggler to decide whose turn it is
+  let player = true;
 
-        const para = document.createElement("p")
-        para.classList.add("sign", sign)
-        para.textContent = "X"
-        block.appendChild(para)
-        
-      })
-      */
+  while(!gameBoard.win() && gameBoard.gameArray.flat().includes("")) {
+    if(player) {
+      
+    } else {
+
+    }
+  }
+
+  if(!gameBoard.win) {
+    //DRAW 
+    console.log("Draw!")
+  } else {
+    console.log(gameBoard.win() + " is the Winner")
+  }
+}
