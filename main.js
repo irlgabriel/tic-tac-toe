@@ -1,4 +1,10 @@
-// GAME LOGIC
+// DOM ELEMENTS
+
+const mainWrapper = document.querySelector("#main-wrapper")
+const board = document.querySelector("#board")
+const form = document.querySelector("form")
+
+// GAME LOGIC MODULE
 
 const gameBoard = (() => {
 
@@ -14,7 +20,6 @@ const gameBoard = (() => {
   }
 
   const move = (player, gameArray, pos) => {
-    console.log(player, gameArray, pos)
     gameArray[pos[0]][pos[1]] = player.sign
   }
 
@@ -25,16 +30,11 @@ const gameBoard = (() => {
 
 })()
 
-
-
-// DOM MANIPULATION
-
-const mainWrapper = document.querySelector("#main-wrapper")
-const board = document.querySelector("#board")
-const form = document.querySelector("form")
-
+// DOM MANIPULATION MODULE
 
 const displayController = (() => {
+
+  // RENDERING DOM (based on gameBoard)
 
   const buildBoard = ((gameArray) => {
     for(let i = 0; i < 9; i ++) {
@@ -45,8 +45,24 @@ const displayController = (() => {
     }
   })()
 
+  const placeSign = (sign) => {
+    const para = document.createElement("p")
+    console.log(para)
+    para.classList.add("sign", sign)
+
+    return para;
+  }
+
   const renderBoard = (() => {
+    const blocks = document.querySelectorAll("data-id")
     for(let i = 0; i < 9; i ++) {
+      const block = blocks[i]
+      const boardSign = gameBoard.gameArray[Math.floor(i / 3)][i % 3]
+      console.log(boardSign)
+      if(boardSign !== "") {
+        let para = placeSign(boardSign[1])
+        block.appendChild(para)
+      }
     }
   })
 
@@ -66,6 +82,12 @@ const displayController = (() => {
     return false;
 
   })
+  
+  return {
+    renderBoard,
+    placeSign,
+    renderBoard
+  }
 
 })()
 
