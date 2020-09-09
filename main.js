@@ -106,6 +106,7 @@ const displayController = (() => {
   form.addEventListener("submit", (e) => {
     e.preventDefault()
     
+  
     const playerOneName = e.target.querySelectorAll("input")[0].value
     const playerTwoName = e.target.querySelectorAll("input")[1].value
 
@@ -133,20 +134,8 @@ const displayController = (() => {
 const ticTacToe = () => {
 
   // toggler to decide whose turn it is
-  let player = true;
-
-  while(!gameBoard.win() && gameBoard.gameArray.flat().includes("")) {
-    if(player) {
-      
-    } else {
-
-    }
-  }
-
-  if(!gameBoard.win) {
-    //DRAW 
-    console.log("Draw!")
-  } else {
-    console.log(gameBoard.win() + " is the Winner")
-  }
+  let player = gameBoard.players[0];
+  
 }
+
+  
