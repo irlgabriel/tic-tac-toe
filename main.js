@@ -24,10 +24,7 @@ const gameBoard = (() => {
   }
 
   const move = (player, pos) => {
-    console.log(player)
-    console.log(pos)
     gameBoard.gameArray[pos[0]][pos[1]] = player.sign
-    console.log(gameBoard.gameArray)
   }
 
   const validMove = (pos) => {
@@ -69,13 +66,12 @@ const gameBoard = (() => {
     return false;
   }
 
+  // BRINGS THE GAME BACK TO THE INITIAL STATE (with the same players, though)
+
   const restartGame = () => {
     gameBoard.gameArray = [["","",""],
                            ["","",""],
                            ["","",""]]
-    gameBoard.players = []
-    form.style.display = "block"
-    displayController.renderBoard()                         
     
   }
   
@@ -102,7 +98,18 @@ const displayController = (() => {
       block.setAttribute("data-id", i);
       board.appendChild(block)
     }
-  })()
+  })
+
+
+
+   const clearBoard = () => {
+    const blocks = document.querySelectorAll(".box")
+    for(let block of blocks) {
+      if(block.children.length > 0) {
+        block.firstElementChild.remove()
+      }
+    }
+   }
 
   // RENDERS DOM Elements based on gameBoard's information
 
@@ -116,10 +123,6 @@ const displayController = (() => {
       if(boardSign !== "" && block.children.length === 0) {
         
         block.appendChild(placeSign(boardSign))
-      } else {
-        if(block.children.length > 0) {
-          block.firstElementChild.remove()
-        }
       }
     }
   })
@@ -134,8 +137,6 @@ const displayController = (() => {
   // STARTS/RESETS THE GAME WHEN CLICKED
   welcomeScreen.addEventListener("click", (e) => {
     welcomeScreen.style.display = "none"
-    gameBoard.restartGame()
-
   })
 
   // BRINGS THE WELCOME SCREEN AGAIN WHEN CLICKED AFTER ENDING A GAME
@@ -143,6 +144,8 @@ const displayController = (() => {
     winnerScreen.style.display = "none"
     welcomeScreen.style.display = "flex"
     gameBoard.restartGame()
+    displayController.clearBoard()
+    
   })
 
   // GET PLAYERS INFO
@@ -160,6 +163,7 @@ const displayController = (() => {
     e.target.style.display = "none"
 
     // We start the game once the users have been selected!
+    displayController.buildBoard()
     ticTacToe()
 
     return false;
@@ -169,6 +173,8 @@ const displayController = (() => {
   return {
     renderBoard,
     placeSign,
+    buildBoard,
+    clearBoard
   }
 
 })()
@@ -200,6 +206,7 @@ const ticTacToe = () => {
         } else {
           player = gameBoard.players[0]
         }
+
         para.classList.remove("player-X", "player-O")
         para.classList.add(`player-${player.sign}`)
         para.innerHTML = `${player.name}'s Turn (${player.sign})`
@@ -213,7 +220,6 @@ const ticTacToe = () => {
         if(winner) {
           winnerScreen.style.display = "flex"
           winnerPara.innerHTML = (`${winner} is the winner!`)
-          document.querySelector(".turn").remove()
         }
       }, 150)
     })

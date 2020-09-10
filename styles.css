@@ -49,11 +49,16 @@
 }
 
 .sign {
-  font-size: 52px;
+  font-size: 64px;
+}
+
+.sign p {
+  margin: 0;
 }
 
 .X {
   color: red;
+  margin: 0;
 }
 .X:before {
   content: "X"
@@ -61,6 +66,7 @@
 
 .O {
   color: black;
+  margin: 0;
 }
 .O:before {
   content: "O"
