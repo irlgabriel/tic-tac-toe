@@ -16,19 +16,31 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+
+    <!-- winner div -->
+    <div class="winner-screen">
+      <p class="winner-para"></p>
+    </div>
+
+    <!-- welcome div -->
+    <div class="welcome-screen">
+      <p class="click-to-play">Click to start!</p>
+    </div>
     <div class="container-fluid" id="main-wrapper">
 
       <div class="dashboard mx-auto w-25 text-center">
-        <h2 class="font-weight-bold">Tic Tac Toe!</h2>
+        <h1 class="font-weight-bold">Tic Tac Toe!</h1>
       </div>
 
       <div class="player-form mx-auto w-50 text-center">
         <form>
-          <div class="form-group">
-            <input type="text" name="playerOneName" placeholder="Enter Player One name.." class="form-control">
+          <div class="form-group d-flex align-items-center">
+            <h2 class="m-0 mr-2 text-danger">X</h2>
+            <input type="text" name="playerOneName" id="player-one-name" placeholder="Enter Player One name.." class="form-control">
           </div>
-          <div class="form-group">
-            <input type="text" name="playerTwoName" placeholder="Enter Player Two name.." class="form-control">
+          <div class="form-group d-flex align-items-center">
+            <h2 class="m-0 mr-2 text-light">O</h2>
+            <input type="text" name="playerTwoName" id="player-two-name" placeholder="Enter Player Two name.." class="form-control">
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-outline-danger text-white btn-secondary d-inline-block mx-auto px-4">Play</button>

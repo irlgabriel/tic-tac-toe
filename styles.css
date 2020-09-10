@@ -27,7 +27,7 @@
 
 }
 
-.boardBlock {
+.box {
   height: 30%;
   width: 30%;
   background-color: white;
@@ -38,7 +38,7 @@
   align-items: center;
 }
 
-.boardBlock:hover {
+.box:hover {
   background-color: rgba(178, 224, 8, 0.274);
   transform: scale(1.1);
   transition: all 0.5s;
@@ -76,3 +76,44 @@
 .player-O {
   color: black;
 }
+
+.welcome-screen{
+  z-index: 21;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: lightsalmon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.click-to-play {
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
+}
+
+.winner-screen {
+  display: none;
+  z-index: 21;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: lightsalmon;
+  justify-content: center;
+  align-items: center;
+}
+
+.winner-para {
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
+}
+
+
+

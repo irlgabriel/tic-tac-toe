@@ -4,12 +4,15 @@ const mainWrapper = document.querySelector("#main-wrapper")
 const board = document.querySelector("#board")
 const form = document.querySelector("form")
 const dashboard = document.querySelector(".dashboard")
+const welcomeScreen = document.querySelector(".welcome-screen")
+const winnerScreen = document.querySelector(".winner-screen")
+const winnerPara = document.querySelector(".winner-para")
 
 // GAME LOGIC MODULE
 
 const gameBoard = (() => {
 
-  const gameArray = [["","",""],
+  let gameArray =   [["","",""],
                      ["","",""],
                      ["","",""]]
 
@@ -23,7 +26,8 @@ const gameBoard = (() => {
   const move = (player, pos) => {
     console.log(player)
     console.log(pos)
-    gameArray[pos[0]][pos[1]] = player.sign
+    gameBoard.gameArray[pos[0]][pos[1]] = player.sign
+    console.log(gameBoard.gameArray)
   }
 
   const validMove = (pos) => {
@@ -34,14 +38,12 @@ const gameBoard = (() => {
   // Check if the game is over yet
   const win = () => {
     // Check rows
-    const arr = gameBoard.gameArray
-    console.log(arr)
+    arr = gameBoard.gameArray
     for(let i = 0; i < 3; i ++) {
       if(arr[i][0] != "" && (arr[i][0] == arr[i][1]) &&(arr[i][1] == arr[i][2])) {
         return arr[i][0]
         
       }
-      console.log("rows")
     }
 
     // Check columns
@@ -50,7 +52,6 @@ const gameBoard = (() => {
       if(arr[0][j] != "" && (arr[0][j] == arr[1][j]) && (arr[1][j] == arr[2][j])) {
         return arr[0][j]
       }
-      console.log("cols")
     }
 
     // Check diagonals
@@ -67,13 +68,24 @@ const gameBoard = (() => {
 
     return false;
   }
+
+  const restartGame = () => {
+    gameBoard.gameArray = [["","",""],
+                           ["","",""],
+                           ["","",""]]
+    gameBoard.players = []
+    form.style.display = "block"
+    displayController.renderBoard()                         
+    
+  }
   
   return {gameArray,
           player,
           players,
           move,
           win,
-          validMove}
+          validMove,
+          restartGame }
 
 })()
 
@@ -86,7 +98,7 @@ const displayController = (() => {
   const buildBoard = (() => {
     for(let i = 0; i < 9; i ++) {
       const block = document.createElement("div")
-      block.classList.add("boardBlock")
+      block.classList.add("box")
       block.setAttribute("data-id", i);
       board.appendChild(block)
     }
@@ -100,11 +112,14 @@ const displayController = (() => {
       const blocks = document.querySelectorAll("[data-id]")
       const block = blocks[i]
       const boardSign = gameBoard.gameArray[Math.floor(i / 3)][i % 3]
-
-      if(boardSign !== "" && block.children.length == 0)
- {
-        let para = placeSign(boardSign)
-        block.appendChild(para)
+      
+      if(boardSign !== "" && block.children.length === 0) {
+        
+        block.appendChild(placeSign(boardSign))
+      } else {
+        if(block.children.length > 0) {
+          block.firstElementChild.remove()
+        }
       }
     }
   })
@@ -115,6 +130,20 @@ const displayController = (() => {
 
     return para;
   }
+
+  // STARTS/RESETS THE GAME WHEN CLICKED
+  welcomeScreen.addEventListener("click", (e) => {
+    welcomeScreen.style.display = "none"
+    gameBoard.restartGame()
+
+  })
+
+  // BRINGS THE WELCOME SCREEN AGAIN WHEN CLICKED AFTER ENDING A GAME
+  winnerScreen.addEventListener("click", () => {
+    winnerScreen.style.display = "none"
+    welcomeScreen.style.display = "flex"
+    gameBoard.restartGame()
+  })
 
   // GET PLAYERS INFO
 
@@ -136,8 +165,6 @@ const displayController = (() => {
     return false;
 
   })
-
-
   
   return {
     renderBoard,
@@ -165,6 +192,7 @@ const ticTacToe = () => {
       const id = block.getAttribute("data-id")
       if(gameBoard.validMove(id)) {
         gameBoard.move(player, [Math.floor(id / 3), id % 3])
+        
         displayController.renderBoard()
 
         if(player == gameBoard.players[0]) {
@@ -180,16 +208,14 @@ const ticTacToe = () => {
       }
 
       const winner = gameBoard.win()
-      
+
       setTimeout(() => {
         if(winner) {
-          //remove this event listener
-          for(let block of blocks) {
-            block.removeEventListener('click',play); 
-          }
-          alert(`${winner} is the winner!`)
+          winnerScreen.style.display = "flex"
+          winnerPara.innerHTML = (`${winner} is the winner!`)
+          document.querySelector(".turn").remove()
         }
-      }, 300)
+      }, 150)
     })
   }
   
