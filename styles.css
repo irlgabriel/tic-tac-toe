@@ -7,7 +7,7 @@
 #main-wrapper {
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #4b79a1, #283e51); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   padding: 10px;
 }
@@ -93,7 +93,7 @@ form {
   top: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #4b79a1, #283e51); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   display: flex;
   justify-content: center;
@@ -114,7 +114,8 @@ form {
   top: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* background: linear-gradient(to right, #6190e8, #a7bfe8); */
+  background-color: rgba(175, 173, 173, 0.63);
 
   justify-content: center;
   align-items: center;

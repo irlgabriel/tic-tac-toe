@@ -165,15 +165,18 @@ const displayController = (() => {
     const playerOneName = e.target.querySelectorAll("input")[0].value
     const playerTwoName = e.target.querySelectorAll("input")[1].value
 
-    gameBoard.players.push(gameBoard.player(playerOneName, "X"))
-    gameBoard.players.push(gameBoard.player(playerTwoName, "O"))
+    if(playerOneName == "" || playerTwoName == "") {
+      alert("Enter names, dude..");
+    } else {
+      gameBoard.players.push(gameBoard.player(playerOneName, "X"))
+      gameBoard.players.push(gameBoard.player(playerTwoName, "O"))
 
-    e.target.style.display = "none"
+      e.target.style.display = "none"
 
-    // We start the game once the users have been selected!
-    displayController.buildBoard()
-    ticTacToe()
-
+      // We start the game once the users have been selected!
+      displayController.buildBoard()
+      ticTacToe()
+    }
     return false;
 
   })
