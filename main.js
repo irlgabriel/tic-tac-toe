@@ -3,6 +3,7 @@
 const mainWrapper = document.querySelector("#main-wrapper")
 const board = document.querySelector("#board")
 const form = document.querySelector("form")
+const dashboard = document.querySelector(".dashboard")
 
 // GAME LOGIC MODULE
 
@@ -19,10 +20,18 @@ const gameBoard = (() => {
     return {name, sign}
   }
 
-  const move = (player, gameArray, pos) => {
+  const move = (player, pos) => {
+    console.log(player)
+    console.log(pos)
     gameArray[pos[0]][pos[1]] = player.sign
   }
 
+  const validMove = (pos) => {
+    return gameBoard.gameArray[Math.floor(pos/3)][pos % 3] == ""
+  }
+
+
+  // Check if the game is over yet
   const win = () => {
     // Check rows
     const board = gameBoard.gameArray
@@ -59,7 +68,8 @@ const gameBoard = (() => {
           player,
           players,
           move,
-          win}
+          win,
+          validMove}
 
 })()
 
@@ -81,13 +91,14 @@ const displayController = (() => {
   // RENDERS DOM Elements based on gameBoard's information
 
   const renderBoard = (() => {
-    const blocks = document.querySelectorAll("[data-id]")
-    console.log(blocks)
+    
     for(let i = 0; i < 9; i ++) {
+      const blocks = document.querySelectorAll("[data-id]")
       const block = blocks[i]
       const boardSign = gameBoard.gameArray[Math.floor(i / 3)][i % 3]
-      console.log(boardSign)
-      if(boardSign !== "") {
+
+      if(boardSign !== "" && block.children.length == 0)
+ {
         let para = placeSign(boardSign)
         block.appendChild(para)
       }
@@ -121,6 +132,8 @@ const displayController = (() => {
     return false;
 
   })
+
+
   
   return {
     renderBoard,
@@ -133,8 +146,44 @@ const displayController = (() => {
 
 const ticTacToe = () => {
 
-  // toggler to decide whose turn it is
-  let player = gameBoard.players[0];
+  let player = gameBoard.players[0]
+
+  const para = document.createElement("h3")
+  para.innerHTML = `${player.name}'s Turn (${player.sign})`
+  para.classList.add("turn", `player-${player.sign}`)
+  
+  dashboard.appendChild(para)
+
+  const blocks = document.querySelectorAll("[data-id]")
+  for(let block of blocks) {
+    block.addEventListener("click", function play(e) {
+
+      const id = block.getAttribute("data-id")
+      if(gameBoard.validMove(id)) {
+        gameBoard.move(player, [Math.floor(id / 3), id % 3])
+        displayController.renderBoard()
+
+        if(player == gameBoard.players[0]) {
+          player = gameBoard.players[1]
+        } else {
+          player = gameBoard.players[0]
+        }
+        para.classList.remove("player-X", "player-O")
+        para.classList.add(`player-${player.sign}`)
+        para.innerHTML = `${player.name}'s Turn (${player.sign})`
+      } else {
+        alert(`Can only place ${player.sign} in empty boxes!`)
+      }
+
+      if(gameBoard.win()) {
+        //remove this event listener
+        for(let block of blocks) {
+          block.removeEventListener('click',play); 
+        }
+        alert(`${gameBoard.win()} is the winner!`)
+      }
+    })
+  }
   
 }
 
