@@ -34,31 +34,35 @@ const gameBoard = (() => {
   // Check if the game is over yet
   const win = () => {
     // Check rows
-    const board = gameBoard.gameArray
+    const arr = gameBoard.gameArray
+    console.log(arr)
     for(let i = 0; i < 3; i ++) {
-      if(board[i][0] != "" && (board[i][0] == board[i][1] == board[i][2])) {
-        return board[i][0]
+      if(arr[i][0] != "" && (arr[i][0] == arr[i][1]) &&(arr[i][1] == arr[i][2])) {
+        return arr[i][0]
+        
       }
+      console.log("rows")
     }
 
     // Check columns
 
     for(let j = 0; j < 3; j ++) {
-      if(board[0][j] != "" && (board[0][j] == board[1][j] == board[2][j])) {
-        return board[0][j]
+      if(arr[0][j] != "" && (arr[0][j] == arr[1][j]) && (arr[1][j] == arr[2][j])) {
+        return arr[0][j]
       }
+      console.log("cols")
     }
 
     // Check diagonals
 
     // Primary diagonal
-    if(board[0][0] != "" && (board[0][0] == board[1][1] == board[2][2])) {
-      return board[0][0]
+    if(arr[0][0] != "" && (arr[0][0] == arr[1][1]) && (arr[1][1] == arr[2][2])) {
+      return arr[0][0]
     }
 
     // Secondary diagonal
-    if(board[0][2] != "" && (board[0][2] == board[1][1] == board[2][0])) {
-      return board[0][2]
+    if(arr[0][2] != "" && (arr[0][2] == arr[1][1]) && (arr[1][1] == arr[2][0])) {
+      return arr[0][2]
     }
 
     return false;
@@ -175,13 +179,17 @@ const ticTacToe = () => {
         alert(`Can only place ${player.sign} in empty boxes!`)
       }
 
-      if(gameBoard.win()) {
-        //remove this event listener
-        for(let block of blocks) {
-          block.removeEventListener('click',play); 
+      const winner = gameBoard.win()
+      
+      setTimeout(() => {
+        if(winner) {
+          //remove this event listener
+          for(let block of blocks) {
+            block.removeEventListener('click',play); 
+          }
+          alert(`${winner} is the winner!`)
         }
-        alert(`${gameBoard.win()} is the winner!`)
-      }
+      }, 300)
     })
   }
   
