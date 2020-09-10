@@ -7,7 +7,8 @@
 #main-wrapper {
   min-height: 100vh;
   width: 100%;
-  background-color: rgba(44, 192, 143, 0.247);
+  background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   padding: 10px;
 }
 
@@ -16,6 +17,7 @@
   height: 60vh;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   flex-wrap: wrap;
   margin: 20px auto 0 auto;
 
@@ -39,13 +41,14 @@
 }
 
 .box:hover {
-  background-color: rgba(178, 224, 8, 0.274);
+  background-color: rgba(243, 116, 116, 0.836);
+
   transform: scale(1.1);
   transition: all 0.5s;
 }
 
-#player-form {
-  margin-top: 15px;
+form {
+  margin-top: 150px;
 }
 
 .sign {
@@ -90,7 +93,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: lightsalmon;
+  background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,7 +114,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: lightsalmon;
+  background: linear-gradient(to right, #6190e8, #a7bfe8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   justify-content: center;
   align-items: center;
 }

@@ -34,8 +34,16 @@ const gameBoard = (() => {
 
   // Check if the game is over yet
   const win = () => {
+    
     // Check rows
-    arr = gameBoard.gameArray
+    const arr = gameBoard.gameArray
+
+    
+    if(!Array.from(arr).flat().includes("")) {
+      return "draw"
+    }
+    
+
     for(let i = 0; i < 3; i ++) {
       if(arr[i][0] != "" && (arr[i][0] == arr[i][1]) &&(arr[i][1] == arr[i][2])) {
         return arr[i][0]
@@ -187,7 +195,7 @@ const ticTacToe = () => {
 
   const para = document.createElement("h3")
   para.innerHTML = `${player.name}'s Turn (${player.sign})`
-  para.classList.add("turn", `player-${player.sign}`)
+  para.classList.add("text-light", "turn", `player-${player.sign}`)
   
   dashboard.appendChild(para)
 
@@ -216,12 +224,19 @@ const ticTacToe = () => {
 
       const winner = gameBoard.win()
 
-      setTimeout(() => {
-        if(winner) {
+      if(winner) {
+        setTimeout(() => {
+          
           winnerScreen.style.display = "flex"
-          winnerPara.innerHTML = (`${winner} is the winner!`)
-        }
-      }, 150)
+          if(winner == "draw") {
+            winnerPara.innerHTML = "It is a DRAW!"
+          }
+          else {
+            winnerPara.innerHTML = (`${winner} is the winner!`)
+          }
+        
+        }, 150)
+      }
     })
   }
   
